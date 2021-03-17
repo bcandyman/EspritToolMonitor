@@ -25,11 +25,17 @@ Private Sub Class_Initialize()
     Set Tools = DocTools
 End Sub
 
+'Runs when a tool has been created
+Private Sub Tools_OnCreate(ByVal Tool As Object)
+    Call StandardizeToolId(Tool)
+End Sub
+
 'Runs when a tool has been modified
 Private Sub Tools_OnModify(ByVal OldName As String, ByVal CLCode As Long, ByVal Tool As Object)
-    Dim T   As EspritTechnology.Tool
-    Set T = Tool
-        
+    Call StandardizeToolId(Tool)
+End Sub
+
+Private Sub StandardizeToolId(T As EspritTechnology.Tool)
     Select Case T.ToolStyle
         Case espMillToolBallMill
             T.ToolID = GetMillBallMillToolId(T)
